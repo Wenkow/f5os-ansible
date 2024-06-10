@@ -1,0 +1,42 @@
+- hosts: all
+  collections:
+    - f5networks.f5os
+  connection: httpapi
+
+  tasks:
+    - name: Create all VLANs
+      f5os_vlan:
+        name: "{{ item.key }}"
+        vlan_id: "{{ item.value }}"
+        state: present
+      with_dict: 
+      - "{{ vlans_external }}"
+      - "{{ vlans_internal }}"   
+
+    - name: Modify Vlans to external interface
+      f5os_lag:
+        name: "LACP-External"
+        trunk_vlans: "{{ vlans_external.values() }}"
+        lag_type: "lacp"
+        config_members:
+          - "4.0"
+          - "5.0"
+        state: present
+
+    - name: Modify Vlans to internal interface
+      f5os_lag:
+        name: "LACP-Internal"      
+        trunk_vlans: "{{ vlans_internal.values() }}"
+        lag_type: "lacp"
+        config_members:
+          - "8.0"
+          - "9.0"        
+        state: present
+
+
+# Uncomment when tenant exists
+#    - name: Configure tenant
+#      f5os_tenant:
+#        name: main
+#        vlans: "{{ vlans_all.values() }}"
+#        state: present

@@ -1,0 +1,26 @@
+- hosts: f5os1
+  collections:
+    - f5networks.f5os
+  connection: httpapi
+
+
+
+  tasks:
+    - debug:
+        msg: "{{ vlans_all.values() }}"
+
+    - name: Create tenant 'main'
+      f5os_tenant:
+        name: main
+        image_name: BIGIP-17.1.1.3-0.0.5.ALL-F5OS.qcow2.zip.bundle
+        nodes:
+          - 1
+        mgmt_ip: 10.10.10.11
+        mgmt_prefix: 24
+        mgmt_gateway: 10.10.10.254
+        vlans: "{{ vlans_all.values() }}"
+        cpu_cores: 8
+        memory: 36864
+        cryptos: enabled
+        running_state: deployed
+

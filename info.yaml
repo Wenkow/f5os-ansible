@@ -1,0 +1,12 @@
+- hosts: all
+  collections:
+    - f5networks.f5os
+  connection: httpapi
+
+  tasks:
+  - name: Collect all F5OS device information
+    f5os_device_info:
+      gather_subset:
+        - all
+  - debug:
+      msg: "{{ ansible_facts }}"  

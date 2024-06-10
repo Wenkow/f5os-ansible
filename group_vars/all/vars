@@ -1,0 +1,9 @@
+ansible_user: "f5os_user"
+ansible_httpapi_password: "f5os_user_password"
+ansible_network_os: "f5networks.f5os.f5os"
+ansible_httpapi_use_ssl: true
+ansible_httpapi_use_proxy: false
+ansible_httpapi_validate_certs: "no"
+ansible_httpapi_port: 8888
+ansible_command_timeout: 180
+persistent_log_messages: true

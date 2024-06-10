@@ -1,0 +1,16 @@
+- hosts: f5os1
+  collections:
+    - f5networks.f5os
+  connection: httpapi
+
+
+  tasks:
+    - name: Create backup config and import it to remote server
+      f5os_config_backup:
+        name: f5os1
+        remote_host: fqdn-or-ip
+        remote_path: upload
+        timeout: 300
+        force: yes
+        state: present
+

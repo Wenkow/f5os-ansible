@@ -1,0 +1,14 @@
+vlans_external:
+  DMZ1-Ext: 101
+  DMZ2-Ext: 102
+  DMZ3-Ext: 103
+  DMZ4-Ext: 104
+
+vlans_internal:
+  HA-Sync: 900
+  DMZ1-Int: 201
+  DMZ2-Int: 202
+  DMZ3-Int: 203
+  DMZ4-Int: 204
+
+vlans_all: "{{ vlans_internal | ansible.builtin.combine(vlans_external) }}"
